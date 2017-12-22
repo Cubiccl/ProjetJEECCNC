@@ -126,7 +126,17 @@ public class UtilisateursBean {
         }
 
         // Cas nominal
-        getService().ajouter(new UtilisateurEntity(email, motDePasse, nom, new Date()));
+        getService().ajouter(new UtilisateurEntity(email, motDePasse, nom, new Date(), true));
+        return "index";
+    }
+    
+    public String bloquer(Integer id) {
+        getService().bloquer(id);
+        return "index";
+    }
+    
+    public String debloquer(Integer id) {
+        getService().debloquer(id);
         return "index";
     }
     

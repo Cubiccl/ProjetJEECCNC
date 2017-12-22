@@ -1,28 +1,28 @@
 <html xmlns="http://www.w3.org/1999/xhtml"   
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:ui="http://java.sun.com/jsf/facelets">
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
     <h:head>
-
     </h:head>
     <h:body>
         <h1>Liste des utilisateurs</h1>
         <h:dataTable value="#{utilisateursBean.utilisateurs}" var="o" border="0" class="order-table">
             <h:column>
                 <f:facet name="header">Id</f:facet>
-                    #{o.id}
+                    <span class="cl#{o.id}">#{o.id}</span>
             </h:column>
             <h:column>
                 <f:facet name="header">Nom</f:facet>
-                    #{o.nom}
+                    <span class="cl#{o.id}">#{o.nom}</span>
             </h:column>
             <h:column>
                 <f:facet name="header">Email</f:facet>
-                    #{o.email}
+                    <span class="cl#{o.id}">#{o.email}</span>
             </h:column>
             <h:column>
                 <f:facet name="header">Mot de passe</f:facet>
-                    #{o.motDePasse}
+                    <span class="cl#{o.id}">#{o.motDePasse}</span>
             </h:column>
             <h:column>
                 <f:facet name="header">Inscription</f:facet>
@@ -33,6 +33,18 @@
             <h:column>
                 <f:facet name="header"></f:facet>
                 <h:form>
+                    <script>
+                    var i =  #{o.isBlocked};
+                    if (i===false) {
+                        document.write('<h:commandButton value="Bloquer" action="${utilisateursBean.bloquer(o.id)}" />');
+                    } else {
+                        document.write('<h:commandButton value="Débloquer" action="${utilisateursBean.debloquer(o.id)}" />');
+                        var cols =     document.getElementsByClassName('cl#{o.id}');
+                        for(j=0; j!=cols.length; j++) {
+                            cols[j].style.color = 'red';
+                        }
+                    }
+                    </script>
                     <h:commandButton value="Supprimer" action="${utilisateursBean.supprimer(o.id)}" />
                 </h:form>
             </h:column>
